@@ -5,6 +5,11 @@ import Login from "./pages/Login";
 import DashboardLayout from "./pages/DashboardLayout";
 import Landing from "./pages/Landing";
 import Error from "./pages/Error";
+import AddJob from "./pages/AddJob";
+import Stats from "./pages/Stats";
+import AllJobs from "./pages/AllJobs";
+import Profile from "./pages/Profile";
+import Admin from "./pages/Admin";
 
 const router = createBrowserRouter([
   {
@@ -27,6 +32,28 @@ const router = createBrowserRouter([
       {
         path: "dashboard",
         element: <DashboardLayout />,
+        children: [
+          {
+            index: true,
+            element: <AddJob />,
+          },
+          {
+            path: "stats",
+            element: <Stats />,
+          },
+          {
+            path: "all-jobs",
+            element: <AllJobs />,
+          },
+          {
+            path: "profile",
+            element: <Profile />,
+          },
+          {
+            path: "admin",
+            element: <Admin />,
+          },
+        ],
       },
     ],
   },
