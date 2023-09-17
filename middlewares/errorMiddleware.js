@@ -1,5 +1,22 @@
 const AppError = require("../utils/appError");
 
+const handleCastErrorDb = err => {
+  return new AppError(`Invalid ${err.path}: ${err.value._id}`, 400);
+};
+
+const handleValidationErrorDb = err => {
+  const errors = Object.values(err.errors).map(el => el.message);
+  const message = `Invalid input data. ${errors.join(". ")}`;
+  return new AppError(message, 400);
+};
+
+const handleDuplicateFieldDb = err => {
+  const name = Object.keys(err.keyValue)[0];
+  const value = Object.values(err.keyValue)[0];
+  const message = `Duplicate field "${name}: ${value}". Please use another ${name}!`;
+  return new AppError(message, 400);
+};
+
 // GLOBAL ERROR MIDDLEWARES
 module.exports = (err, req, res, next) => {
   err.statusCode = err.statusCode || 500;
@@ -17,6 +34,10 @@ module.exports = (err, req, res, next) => {
     });
   //ERROR IN PRODUCTION
   else if (process.env.NODE_ENV === "production") {
+    if (err.name === "CastError") err = handleCastErrorDb(err);
+    if (err.name === "ValidationError") err = handleValidationErrorDb(err);
+    if (err.code === 11000) err = handleDuplicateFieldDb(err);
+
     if (err.isOperational)
       // OPERATIONAL ERROR, TRUSTED ERROR, SEND MESSAGE TO THE CLIENT.
       return res.status(err.statusCode).json({
