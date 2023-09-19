@@ -1,4 +1,4 @@
-import { Outlet } from "react-router-dom";
+import { Outlet, redirect, useLoaderData } from "react-router-dom";
 import { createContext, useContext, useState } from "react";
 
 import Wrapper from "../assets/wrappers/Dashboard";
@@ -6,11 +6,24 @@ import SmallSidebar from "../components/SmallSidebar";
 import BigSidebar from "../components/BigSidebar";
 import Navbar from "../components/Navbar";
 import { checkDefaultTheme } from "../App";
+import raviranjan from "../utils/customFetch";
+import { toast } from "react-toastify";
 
 const DashboardContext = createContext();
 
+export const loader = async () => {
+  try {
+    const { data } = await raviranjan.get("auth/profile");
+    return data;
+  } catch (error) {
+    toast.error(error?.response?.data?.message);
+    return redirect("/");
+  }
+};
+
 const DashboardLayout = () => {
-  const user = { name: "raviranjan" };
+  const { user } = useLoaderData();
+
   const [showSidebar, setShowSidebar] = useState(false);
   const [isDarkTheme, setIsDarkTheme] = useState(checkDefaultTheme);
 
@@ -43,7 +56,7 @@ const DashboardLayout = () => {
           <div>
             <Navbar />
             <div className='dashboard-page'>
-              <Outlet />
+              <Outlet context={{ user }} />
             </div>
           </div>
         </main>

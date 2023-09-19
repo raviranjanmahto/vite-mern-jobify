@@ -2,7 +2,9 @@ import { RouterProvider, createBrowserRouter } from "react-router-dom";
 import HomeLayout from "./pages/HomeLayout";
 import Register, { action as registerAction } from "./pages/Register";
 import Login, { action as loginAction } from "./pages/Login";
-import DashboardLayout from "./pages/DashboardLayout";
+import DashboardLayout, {
+  loader as dashboardLoader,
+} from "./pages/DashboardLayout";
 import Landing from "./pages/Landing";
 import Error from "./pages/Error";
 import AddJob from "./pages/AddJob";
@@ -42,6 +44,7 @@ const router = createBrowserRouter([
       {
         path: "dashboard",
         element: <DashboardLayout />,
+        loader: dashboardLoader,
         children: [
           {
             index: true,
