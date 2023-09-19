@@ -77,7 +77,6 @@ html {
 }
 
 .dark-theme {
-  transition: 3s;
   --text-color: var(--dark-mode-text-color);
   --background-color: var(--dark-mode-bg-color);
   --text-secondary-color: var(--dark-mode-text-secondary-color);
