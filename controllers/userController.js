@@ -1,30 +1,22 @@
+const Job = require("../models/jobModel");
 const User = require("../models/userModel");
-const AppError = require("../utils/appError");
-const { attachCookie } = require("../utils/attachCookie");
 const catchAsync = require("../utils/catchAsync");
 
-exports.signup = catchAsync(async (req, res, next) => {
-  const { email, fName, lName, password, location } = req.body;
-  const exUser = await User.findOne({ email });
-  if (exUser)
-    return next(new AppError("Email already in use, Please login.", 400));
-
-  if (!email || !fName || !password)
-    return next(new AppError("All fields are required!"));
-  const user = await User.create({ email, fName, password });
-  user.password = undefined;
-  attachCookie(res, user, 201);
+exports.getCurrentUser = catchAsync(async (req, res) => {
+  res.status(200).json({ status: "success", user: req.user });
 });
 
-exports.login = catchAsync(async (req, res, next) => {
-  const { email, password } = req.body;
+exports.updateUser = catchAsync(async (req, res) => {
+  const { fName, lName, location } = req.body;
+  if (fName) req.user.fName = fName;
+  if (lName) req.user.lName = lName;
+  if (location) req.user.location = location;
+  await req.user.save();
+  res.status(200).json({ status: "success" });
+});
 
-  if (!email || !password)
-    return next(new AppError("All fields are required!"));
-  const user = await User.findOne({ email }).select("+password");
-  if (!user || !(await user.correctPassword(password)))
-    return next(new AppError("Invalid email or password!", 401));
-  user.password = undefined;
-
-  attachCookie(res, user, 200);
+exports.applicationStats = catchAsync(async (req, res, next) => {
+  const users = await User.countDocuments();
+  const jobs = await Job.countDocuments();
+  res.status(200).json({ status: "success", users, jobs });
 });
