@@ -11,7 +11,7 @@ exports.signup = catchAsync(async (req, res, next) => {
 
   if (!email || !fName || !password)
     return next(new AppError("All fields are required!"));
-  const user = await User.create({ email, fName, password });
+  const user = await User.create({ email, fName, lName, location, password });
   user.password = undefined;
   attachCookie(res, user, 201);
 });
@@ -44,4 +44,3 @@ exports.restrictTo = (...roles) => {
     next();
   };
 };
-
