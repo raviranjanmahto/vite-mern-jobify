@@ -1,5 +1,6 @@
 const User = require("../models/userModel");
 const AppError = require("../utils/appError");
+const { attachCookie } = require("../utils/attachCookie");
 const catchAsync = require("../utils/catchAsync");
 
 exports.signup = catchAsync(async (req, res, next) => {
@@ -12,7 +13,7 @@ exports.signup = catchAsync(async (req, res, next) => {
     return next(new AppError("All fields are required!"));
   const user = await User.create({ email, fName, password });
   user.password = undefined;
-  res.status(201).json({ status: "success", user });
+  attachCookie(res, user, 201);
 });
 
 exports.login = catchAsync(async (req, res, next) => {
@@ -25,5 +26,5 @@ exports.login = catchAsync(async (req, res, next) => {
     return next(new AppError("Invalid email or password!", 401));
   user.password = undefined;
 
-  res.status(200).json({ status: "success", user });
+  attachCookie(res, user, 200);
 });

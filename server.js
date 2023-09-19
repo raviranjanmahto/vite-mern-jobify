@@ -2,6 +2,8 @@ const dotenv = require("dotenv").config();
 const express = require("express");
 const mongoose = require("mongoose");
 const morgan = require("morgan");
+const cookieParser = require("cookie-parser");
+
 const AppError = require("./utils/appError");
 const errorGlobalMiddleware = require("./middlewares/errorMiddleware");
 const authRoutes = require("./routes/userRoutes");
@@ -9,6 +11,7 @@ const jobRouter = require("./routes/jobRoutes");
 
 const app = express();
 app.use(express.json());
+app.use(cookieParser());
 
 if (process.env.NODE_ENV === "development") app.use(morgan("dev"));
 
