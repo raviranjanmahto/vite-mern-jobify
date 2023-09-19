@@ -1,4 +1,4 @@
-import { Outlet, redirect, useLoaderData } from "react-router-dom";
+import { Outlet, redirect, useLoaderData, useNavigate } from "react-router-dom";
 import { createContext, useContext, useState } from "react";
 
 import Wrapper from "../assets/wrappers/Dashboard";
@@ -22,6 +22,7 @@ export const loader = async () => {
 };
 
 const DashboardLayout = () => {
+  const navigate = useNavigate();
   const { user } = useLoaderData();
 
   const [showSidebar, setShowSidebar] = useState(false);
@@ -36,7 +37,11 @@ const DashboardLayout = () => {
 
   const toggleSidebar = () => setShowSidebar(!showSidebar);
 
-  const logoutUser = async () => console.log("Logout user");
+  const logoutUser = async () => {
+    await raviranjan("/auth/logout");
+    toast.success("Log out successful");
+    navigate("/");
+  };
 
   return (
     <DashboardContext.Provider
