@@ -27,6 +27,11 @@ const jobSchema = new mongoose.Schema(
       trim: true,
       default: "N/A",
     },
+    createdBy: {
+      type: mongoose.Types.ObjectId,
+      ref: "User",
+      required: true,
+    },
   },
   { timestamps: true }
 );
