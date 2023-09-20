@@ -3,12 +3,19 @@ const AppError = require("../utils/appError");
 const catchAsync = require("../utils/catchAsync");
 
 exports.createJob = catchAsync(async (req, res, next) => {
-  const { company, position } = req.body;
+  const { company, position, jobStatus, jobTypes, jobLocation } = req.body;
   if (!company || !position)
     return next(new AppError("All fields are required!", 400));
 
-  const job = await Job.create({ company, position, createdBy: req.user._id });
-  res.status(201).json({ status: "success", job });
+  const job = await Job.create({
+    company,
+    position,
+    jobStatus,
+    jobTypes,
+    jobLocation,
+    createdBy: req.user._id,
+  });
+  res.status(201).json({ status: "success" });
 });
 
 exports.getJob = catchAsync(async (req, res, next) => {

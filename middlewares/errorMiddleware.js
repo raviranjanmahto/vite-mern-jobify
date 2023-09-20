@@ -17,6 +17,9 @@ const handleDuplicateFieldDb = err => {
   return new AppError(message, 400);
 };
 
+const handleJWTError = () =>
+  new AppError("Invalid token. Please log in again!", 401);
+
 // GLOBAL ERROR MIDDLEWARES
 module.exports = (err, req, res, next) => {
   err.statusCode = err.statusCode || 500;
@@ -37,6 +40,7 @@ module.exports = (err, req, res, next) => {
     if (err.name === "CastError") err = handleCastErrorDb(err);
     if (err.name === "ValidationError") err = handleValidationErrorDb(err);
     if (err.code === 11000) err = handleDuplicateFieldDb(err);
+    if (err.name === "JsonWebTokenError") err = handleJWTError(err);
 
     if (err.isOperational)
       // OPERATIONAL ERROR, TRUSTED ERROR, SEND MESSAGE TO THE CLIENT.

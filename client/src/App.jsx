@@ -7,7 +7,7 @@ import DashboardLayout, {
 } from "./pages/DashboardLayout";
 import Landing from "./pages/Landing";
 import Error from "./pages/Error";
-import AddJob from "./pages/AddJob";
+import AddJob, { action as addJobAction } from "./pages/AddJob";
 import Stats from "./pages/Stats";
 import AllJobs from "./pages/AllJobs";
 import Profile from "./pages/Profile";
@@ -49,6 +49,7 @@ const router = createBrowserRouter([
           {
             index: true,
             element: <AddJob />,
+            action: addJobAction,
           },
           {
             path: "stats",

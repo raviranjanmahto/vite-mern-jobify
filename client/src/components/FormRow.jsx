@@ -1,4 +1,4 @@
-const FormRow = ({ type, name, labelText, autoFocus }) => {
+const FormRow = ({ type, name, labelText, autoFocus,defaultValue }) => {
   return (
     <div>
       <label htmlFor={name} className='form-label'>
@@ -11,6 +11,7 @@ const FormRow = ({ type, name, labelText, autoFocus }) => {
         className='form-input'
         required
         autoFocus={autoFocus}
+        defaultValue={defaultValue}
       />
     </div>
   );
