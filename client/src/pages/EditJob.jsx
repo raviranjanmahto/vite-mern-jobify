@@ -1,10 +1,4 @@
-import {
-  Form,
-  redirect,
-  useLoaderData,
-  useNavigation,
-  useParams,
-} from "react-router-dom";
+import { Form, redirect, useLoaderData, useNavigation } from "react-router-dom";
 import raviranjan from "../utils/customFetch";
 import { toast } from "react-toastify";
 import Wrapper from "../assets/wrappers/DashboardFormPage";
@@ -21,8 +15,17 @@ export const loader = async ({ params }) => {
   }
 };
 
-export const action = async () => {
-  return null;
+export const action = async ({ request, params }) => {
+  const formData = await request.formData();
+  const data = Object.fromEntries(formData);
+  try {
+    await raviranjan.patch(`/jobs/${params.id}`, data);
+    toast.success("Job edited successfully");
+    return redirect("../all-jobs");
+  } catch (error) {
+    toast.error(error?.response?.data?.message);
+    return error;
+  }
 };
 
 const EditJob = () => {

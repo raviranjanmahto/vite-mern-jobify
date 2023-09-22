@@ -36,7 +36,7 @@ exports.getAllJob = catchAsync(async (req, res, next) => {
 });
 
 exports.UpdateJob = catchAsync(async (req, res, next) => {
-  const { company, position } = req.body;
+  const { company, position, jobStatus, jobTypes, jobLocation } = req.body;
 
   const job = await Job.findById({ _id: req.params.id });
   if (!job) return next(new AppError(`No Job found with id ${req.params.id}`));
@@ -48,6 +48,9 @@ exports.UpdateJob = catchAsync(async (req, res, next) => {
 
   if (company) job.company = company;
   if (position) job.position = position;
+  if (jobLocation) job.jobLocation = jobLocation;
+  if (jobStatus) job.jobStatus = jobStatus;
+  if (jobTypes) job.jobTypes = jobTypes;
   await job.save();
 
   res.status(200).json({ status: "success", job });
