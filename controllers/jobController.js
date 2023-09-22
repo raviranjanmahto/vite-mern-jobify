@@ -32,8 +32,6 @@ exports.getJob = catchAsync(async (req, res, next) => {
 
 exports.getAllJob = catchAsync(async (req, res, next) => {
   const jobs = await Job.find({ createdBy: req.user._id });
-  if (jobs.length < 1) return next(new AppError("No Jobs found", 404));
-
   res.status(200).json({ status: "success", jobs });
 });
 

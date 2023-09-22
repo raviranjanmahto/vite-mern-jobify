@@ -9,7 +9,7 @@ import Landing from "./pages/Landing";
 import Error from "./pages/Error";
 import AddJob, { action as addJobAction } from "./pages/AddJob";
 import Stats from "./pages/Stats";
-import AllJobs from "./pages/AllJobs";
+import AllJobs, { loader as allJobsLoader } from "./pages/AllJobs";
 import Profile from "./pages/Profile";
 import Admin from "./pages/Admin";
 
@@ -58,6 +58,7 @@ const router = createBrowserRouter([
           {
             path: "all-jobs",
             element: <AllJobs />,
+            loader: allJobsLoader,
           },
           {
             path: "profile",
