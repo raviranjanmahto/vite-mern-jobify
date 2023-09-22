@@ -1,13 +1,13 @@
-import { Form, Link } from 'react-router-dom';
-import Wrapper from '../assets/wrappers/Job';
-import JobInfo from './JobInfo';
-import { FaBriefcase, FaCalendarAlt, FaLocationArrow } from 'react-icons/fa';
+import { Form, Link } from "react-router-dom";
+import Wrapper from "../assets/wrappers/Job";
+import JobInfo from "./JobInfo";
+import { FaBriefcase, FaCalendarAlt, FaLocationArrow } from "react-icons/fa";
 
 const formatDate = date =>
-  new Intl.DateTimeFormat('en', {
-    day: 'numeric',
-    month: 'short',
-    year: 'numeric',
+  new Intl.DateTimeFormat("en", {
+    day: "numeric",
+    month: "short",
+    year: "numeric",
     // weekday: "long",
   }).format(new Date(date));
 
@@ -40,7 +40,7 @@ const Job = ({
           <Link to={`../edit-job/${_id}`} className='btn edit-btn'>
             Edit
           </Link>
-          <Form>
+          <Form method='POST' action={`../delete-job/${_id}`}>
             <button className='btn delete-btn' type='submit'>
               Delete
             </button>
