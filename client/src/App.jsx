@@ -11,7 +11,7 @@ import AddJob, { action as addJobAction } from "./pages/AddJob";
 import Stats from "./pages/Stats";
 import AllJobs, { loader as allJobsLoader } from "./pages/AllJobs";
 import Profile from "./pages/Profile";
-import Admin from "./pages/Admin";
+import Admin, { loader as adminLoader } from "./pages/Admin";
 import EditJob, {
   action as editJobAction,
   loader as editJobLoader,
@@ -82,6 +82,7 @@ const router = createBrowserRouter([
           {
             path: "admin",
             element: <Admin />,
+            loader: adminLoader,
           },
         ],
       },

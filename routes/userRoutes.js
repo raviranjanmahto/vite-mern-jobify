@@ -11,7 +11,7 @@ router.use(authMiddleware.protect);
 router.get("/profile", userController.getCurrentUser);
 router.patch("/updateUser", userController.updateUser);
 router.get(
-  "/applicationStats",
+  "/admin/applicationStats",
   authController.restrictTo("admin"),
   userController.applicationStats
 );
