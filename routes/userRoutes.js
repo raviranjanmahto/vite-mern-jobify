@@ -9,7 +9,12 @@ router.get("/logout", authController.logout);
 
 router.use(authMiddleware.protect);
 router.get("/profile", userController.getCurrentUser);
-router.patch("/updateUser", userController.updateUser);
+router.patch(
+  "/updateUser",
+  userController.uploadUserAvatar,
+  userController.resizeUserAvatar,
+  userController.updateUser
+);
 router.get(
   "/admin/applicationStats",
   authController.restrictTo("admin"),

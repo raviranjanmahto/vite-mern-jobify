@@ -38,6 +38,8 @@ const userSchema = new mongoose.Schema(
       enum: ["user", "admin"],
       default: "user",
     },
+    avatar: String,
+    avatarPublicId: String,
   },
   { timestamps: true }
 );

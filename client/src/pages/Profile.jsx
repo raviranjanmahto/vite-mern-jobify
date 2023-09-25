@@ -7,7 +7,7 @@ import raviranjan from "../utils/customFetch";
 export const action = async ({ request }) => {
   const formData = await request.formData();
   const file = formData.get("avatar");
-  if (file && FileReader.size > 500000) toast.error("Image size too large");
+  if (file && file.size > 1) toast("Wait, Image is Resizing...");
   try {
     await raviranjan.patch("/auth/updateUser", formData);
     toast.success("Profile update successfully");
