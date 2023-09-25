@@ -1,14 +1,10 @@
-import {
-  Form,
-  redirect,
-  useNavigation,
-  useOutletContext,
-} from "react-router-dom";
+import { Form, redirect, useOutletContext } from "react-router-dom";
 import Wrapper from "../assets/wrappers/DashboardFormPage";
 import FormRow from "../components/FormRow";
 import FormRowSelect from "../components/FormRowSelect";
 import raviranjan from "../utils/customFetch";
 import { toast } from "react-toastify";
+import SubmitBtn from "../components/SubmitBtn";
 
 export const action = async ({ request }) => {
   const formData = await request.formData();
@@ -25,8 +21,6 @@ export const action = async ({ request }) => {
 
 const AddJob = () => {
   const { user } = useOutletContext();
-  const navigation = useNavigation();
-  const isSubmitting = navigation.state === "submitting";
 
   return (
     <Wrapper>
@@ -51,13 +45,7 @@ const AddJob = () => {
             name='jobTypes'
             list={["full-time", "part-time", "internship"]}
           />
-          <button
-            type='submit'
-            className='btn btn-block form-btn'
-            disabled={isSubmitting}
-          >
-            {isSubmitting ? "Submitting..." : "Submit"}
-          </button>
+          <SubmitBtn formBtn />
         </div>
       </Form>
     </Wrapper>

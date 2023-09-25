@@ -1,9 +1,10 @@
-import { Form, Link, redirect, useNavigation } from "react-router-dom";
+import { Form, Link, redirect } from "react-router-dom";
 import Wrapper from "../assets/wrappers/LoginAndRegisterPage";
 import FormRow from "../components/FormRow";
 import Logo from "../components/Logo";
 import raviranjan from "../utils/customFetch";
 import { toast } from "react-toastify";
+import SubmitBtn from "../components/SubmitBtn";
 
 export const action = async ({ request }) => {
   const formData = await request.formData();
@@ -19,9 +20,6 @@ export const action = async ({ request }) => {
 };
 
 const Login = () => {
-  const navigation = useNavigation();
-  const isSubmitting = navigation.state === "submitting";
-
   return (
     <Wrapper>
       <Form method='POST' className='form'>
@@ -29,9 +27,7 @@ const Login = () => {
         <h4>Login</h4>
         <FormRow name='email' type='email' autoFocus='autoFocus' />
         <FormRow name='password' type='password' />
-        <button type='submit' className='btn btn-block' disabled={isSubmitting}>
-          {isSubmitting ? "Submitting..." : "Submit"}
-        </button>
+        <SubmitBtn />
         <button type='button' className='btn btn-block'>
           Explore the app
         </button>

@@ -1,8 +1,9 @@
-import { Form, useNavigation, useOutletContext } from "react-router-dom";
+import { Form, useOutletContext } from "react-router-dom";
 import Wrapper from "../assets/wrappers/DashboardFormPage";
 import FormRow from "../components/FormRow";
 import { toast } from "react-toastify";
 import raviranjan from "../utils/customFetch";
+import SubmitBtn from "../components/SubmitBtn";
 
 export const action = async ({ request }) => {
   const formData = await request.formData();
@@ -20,8 +21,6 @@ export const action = async ({ request }) => {
 const Profile = () => {
   const { user } = useOutletContext();
   const { fName, lName, location, email } = user;
-  const navigation = useNavigation();
-  const isSubmitting = navigation.state === "submitting";
 
   return (
     <Wrapper>
@@ -54,13 +53,7 @@ const Profile = () => {
           />
           <FormRow type='text' name='email' defaultValue={email} />
           <FormRow type='text' name='location' defaultValue={location} />
-          <button
-            type='submit'
-            className='btn btn-block form-btn'
-            disabled={isSubmitting}
-          >
-            {isSubmitting ? "Submitting..." : "Submit"}
-          </button>
+          <SubmitBtn formBtn />
         </div>
       </Form>
     </Wrapper>
