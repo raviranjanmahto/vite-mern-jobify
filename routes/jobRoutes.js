@@ -4,11 +4,14 @@ const authMiddleware = require("../middlewares/authMiddleware");
 
 router.use(authMiddleware.protect);
 
-router.route("/").post(jobController.createJob).get(jobController.getAllJob);
+router
+  .route("/")
+  .post(authMiddleware.testUser, jobController.createJob)
+  .get(jobController.getAllJob);
 router
   .route("/:id")
   .get(jobController.getJob)
-  .patch(jobController.UpdateJob)
-  .delete(jobController.deleteJob);
+  .patch(authMiddleware.testUser, jobController.UpdateJob)
+  .delete(authMiddleware.testUser, jobController.deleteJob);
 
 module.exports = router;

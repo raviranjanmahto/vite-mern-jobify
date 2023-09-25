@@ -23,3 +23,10 @@ exports.protect = catchAsync(async (req, res, next) => {
   req.user = currentUser;
   next();
 });
+
+exports.testUser = (req, res, next) => {
+  if (req.user._id.toString() === "651186b2dac488877512d62d")
+    return next(new AppError("Test user Read only!..."));
+
+  next();
+};

@@ -1,4 +1,4 @@
-import { Form, Link, redirect } from "react-router-dom";
+import { Form, Link, redirect, useNavigate } from "react-router-dom";
 import Wrapper from "../assets/wrappers/LoginAndRegisterPage";
 import FormRow from "../components/FormRow";
 import Logo from "../components/Logo";
@@ -20,6 +20,23 @@ export const action = async ({ request }) => {
 };
 
 const Login = () => {
+  const navigate = useNavigate();
+
+  const loginDemoUser = async () => {
+    const data = {
+      email: "test@test.com",
+      password: "qwerty",
+    };
+    try {
+      await raviranjan.post("auth/login", data);
+      toast.success("Login successful");
+      toast("This is demo user! Read only...");
+      navigate("/dashboard");
+    } catch (error) {
+      toast.error(error?.response?.data?.message);
+    }
+  };
+
   return (
     <Wrapper>
       <Form method='POST' className='form'>
@@ -28,7 +45,7 @@ const Login = () => {
         <FormRow name='email' type='email' autoFocus='autoFocus' />
         <FormRow name='password' type='password' />
         <SubmitBtn />
-        <button type='button' className='btn btn-block'>
+        <button type='button' className='btn btn-block' onClick={loginDemoUser}>
           Explore the app
         </button>
         <p>

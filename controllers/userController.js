@@ -35,12 +35,12 @@ const upload = multer({
 
 exports.uploadUserAvatar = upload.single("avatar");
 
-exports.resizeUserAvatar = (req, res, next) => {
+exports.resizeUserAvatar = async (req, res, next) => {
   if (!req.file) return next();
 
   req.file.filename = `user-${req.user._id}-${Date.now()}.jpeg`;
 
-  sharp(req.file.buffer)
+  await sharp(req.file.buffer)
     .resize(400, 400)
     .toFormat("jpeg")
     .jpeg({ quality: 90 })
@@ -56,7 +56,7 @@ exports.getCurrentUser = catchAsync(async (req, res) => {
 });
 
 exports.updateUser = catchAsync(async (req, res) => {
-  const { fName, lName, location, avatar, avatarPublicId } = req.body;
+  const { fName, lName, location } = req.body;
   if (fName) req.user.fName = fName;
   if (lName) req.user.lName = lName;
   if (location) req.user.location = location;
@@ -66,10 +66,11 @@ exports.updateUser = catchAsync(async (req, res) => {
 
   if (req.file) {
     const res = await cloudinary.uploader.upload(req.file.path);
-    await fs.unlink(req.file.path);
 
     req.user.avatar = res.secure_url;
     req.user.avatarPublicId = res.public_id;
+
+    await fs.unlink(req.file.path);
   }
 
   await req.user.save();

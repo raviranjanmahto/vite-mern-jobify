@@ -11,6 +11,7 @@ router.use(authMiddleware.protect);
 router.get("/profile", userController.getCurrentUser);
 router.patch(
   "/updateUser",
+  authMiddleware.testUser,
   userController.uploadUserAvatar,
   userController.resizeUserAvatar,
   userController.updateUser
