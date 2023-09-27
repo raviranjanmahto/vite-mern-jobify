@@ -8,6 +8,9 @@ router
   .route("/")
   .post(authMiddleware.testUser, jobController.createJob)
   .get(jobController.getAllJob);
+
+router.get("/stats", jobController.showStats);
+
 router
   .route("/:id")
   .get(jobController.getJob)

@@ -68,3 +68,7 @@ exports.deleteJob = catchAsync(async (req, res, next) => {
 
   res.status(200).json({ status: "success" });
 });
+
+exports.showStats = async (req, res, next) => {
+  console.log("ssssssss");
+};
